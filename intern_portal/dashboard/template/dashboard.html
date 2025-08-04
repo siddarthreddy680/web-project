@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title></head>
+<body style="max-width:400px; margin:40px auto; font-family:Arial;">
+  <h2>Welcome, <span id="internName"></span>!</h2>
+  <p><b>Referral Code:</b> <span id="referralCode"></span></p>
+  <p><b>Total Donations Raised:</b> ₹<span id="donations"></span></p>
+  
+  <h3>Rewards</h3>
+  <ul id="rewardsList"></ul>
+
+  <button onclick="location.href='/leaderboard/'" style="margin-top:20px; padding:10px;">View Leaderboard</button>
+  <button onclick="location.href='/'" style="margin-top:10px; padding:10px;">Logout</button>
+
+  <script>
+    fetch('/api/intern/').then(res => res.json()).then(data => {
+      document.getElementById('internName').textContent = data.name;
+      document.getElementById('referralCode').textContent = data.referral_code;
+      document.getElementById('donations').textContent = data.donations;
+      const ul = document.getElementById('rewardsList');
+      data.rewards.forEach(r => {
+        const li = document.createElement('li');
+        li.textContent = r.title + (r.unlocked ? ' ✅' : '');
+        ul.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>

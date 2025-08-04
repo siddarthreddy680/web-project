@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Leaderboard</title></head>
+<body style="max-width:400px; margin:40px auto; font-family:Arial;">
+  <h2>Leaderboard</h2>
+  <ol id="leaderboardList"></ol>
+  <button onclick="location.href='/dashboard/'" style="margin-top:20px; padding:10px;">Back to Dashboard</button>
+  <button onclick="location.href='/'" style="margin-top:10px; padding:10px;">Logout</button>
+
+  <script>
+    fetch('/api/leaderboard/').then(res => res.json()).then(data => {
+      const ol = document.getElementById('leaderboardList');
+      data.forEach(l => {
+        const li = document.createElement('li');
+        li.textContent = `${l.name} - ₹${l.donations}`;
+        ol.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
